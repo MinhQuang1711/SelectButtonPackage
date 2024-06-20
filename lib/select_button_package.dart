@@ -39,42 +39,18 @@ class SearchButton<T> extends StatefulWidget {
 
 class _SearchButtonState<T> extends State<SearchButton<T>> {
   final TextEditingController _controller = TextEditingController();
-  InputDecoration _decoration = const InputDecoration();
 
   @override
   void initState() {
     if (widget.initialValue != null) {
       _controller.text = widget.initialValue!;
     }
-    if (widget.decoration != null) {
-      _decoration = widget.decoration!;
-    }
     super.initState();
-  }
-
-  void _onTapClearButton() {
-    widget.onTapClearButton?.call();
-    _controller.clear();
-    _decoration = _decoration.copyWith(
-      suffixIcon: widget.decoration?.suffixIcon ?? const SizedBox(),
-    );
-    setState(() {});
   }
 
   void _onTap(SearchItem<T> val) {
     widget.onTap.call(val);
     _controller.text = val.displayLabel;
-    _decoration = _decoration.copyWith(
-        suffixIcon: Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        _clearButton(_onTapClearButton),
-        if (widget.decoration?.suffixIcon != null)
-          widget.decoration?.suffixIcon ?? const SizedBox(),
-      ],
-    ));
-    setState(() {});
   }
 
   void _showBottomSheet() => showModalBottomSheet(
@@ -101,28 +77,10 @@ class _SearchButtonState<T> extends State<SearchButton<T>> {
       readOnly: true,
       style: widget.style,
       controller: _controller,
-      decoration: _decoration,
+      decoration: widget.decoration,
       validator: widget.validator,
       initialValue: widget.initialValue,
       textAlign: widget.textAlign ?? TextAlign.start,
-    );
-  }
-
-  Widget _clearButton(Function()? onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          shape: BoxShape.circle,
-        ),
-        child: const Icon(
-          Icons.close_rounded,
-          color: Colors.black,
-          size: 14,
-        ),
-      ),
     );
   }
 }
