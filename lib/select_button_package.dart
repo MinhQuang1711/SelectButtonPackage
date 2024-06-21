@@ -7,8 +7,8 @@ import 'model/search_decoration.dart';
 import 'model/search_item.dart';
 import 'view/bottom_sheet.dart';
 
-class SearchButton<T> extends StatefulWidget {
-  const SearchButton({
+class CustomSelectButton<T> extends StatefulWidget {
+  const CustomSelectButton({
     super.key,
     this.title,
     this.style,
@@ -34,10 +34,10 @@ class SearchButton<T> extends StatefulWidget {
   final String? Function(String?)? validator;
 
   @override
-  State<SearchButton<T>> createState() => _SearchButtonState<T>();
+  State<CustomSelectButton<T>> createState() => _CustomSelectButtonState<T>();
 }
 
-class _SearchButtonState<T> extends State<SearchButton<T>> {
+class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -56,7 +56,7 @@ class _SearchButtonState<T> extends State<SearchButton<T>> {
   void _showBottomSheet() => showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        builder: (_) => CustomSelectButton<T>(
+        builder: (_) => SearchBottomSheet<T>(
           title: widget.title,
           searchDecoration: widget.searchDecoration,
           onTap: _onTap,
