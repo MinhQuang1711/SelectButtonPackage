@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:select_button_package/widget/default_child.dart';
 import '../const/box_decoration.dart';
-import '../const/input_decoration.dart';
 import '../const/padding.dart';
 import '../const/view-model/search_view_model.dart';
 import '../model/search_decoration.dart';
 import '../model/search_item.dart';
+import '../widget/search_bar.dart';
 
 class SearchBottomSheet<T> extends StatefulWidget {
   const SearchBottomSheet({
@@ -15,7 +15,7 @@ class SearchBottomSheet<T> extends StatefulWidget {
     this.searchDecoration,
     required this.searchItems,
   });
-  final Text? title;
+  final Widget? title;
   final Function(SearchItem<T>) onTap;
   final List<SearchItem<T>> searchItems;
   final SearchDecoration? searchDecoration;
@@ -53,8 +53,12 @@ class _SearchBottomSheetState<T> extends State<SearchBottomSheet<T>> {
       child: Column(
         children: [
           _container(),
+          const SizedBox(height: 25),
           if (widget.title != null) widget.title!,
-          _searchBar(widget.searchDecoration),
+          SearchBarSelect(
+            onChanged: _onChanged,
+            searchDecoration: widget.searchDecoration,
+        ),
           const SizedBox(height: 20),
           _listView(_viewModel.listSearchItemStream, _onSelectedItem),
         ],
@@ -71,13 +75,6 @@ class _SearchBottomSheetState<T> extends State<SearchBottomSheet<T>> {
     );
   }
 
-  TextField _searchBar(SearchDecoration? decoration) {
-    return TextField(
-      onChanged: _onChanged,
-      decoration: searchInputDecoration(),
-    );
-  }
-
   Widget _listView(
       Stream<List<SearchItem<T>>> stream, Function(SearchItem<T>) onTap) {
     return Expanded(
@@ -87,8 +84,9 @@ class _SearchBottomSheetState<T> extends State<SearchBottomSheet<T>> {
             var items = snapshot.data ?? [];
             return ListView.builder(
               itemBuilder: (context, index) => GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () => onTap.call(items[index]),
-                child: items[index].child,
+                child: items[index].child ?? DefaultChild(item: items[index]),
               ),
               itemCount: items.length,
             );
