@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../../model/search_item.dart';
+import '../model/search_item.dart';
 
 class SearchViewModel<T> {
   final _listSearchItemSubject = StreamController<List<SearchItem<T>>>();

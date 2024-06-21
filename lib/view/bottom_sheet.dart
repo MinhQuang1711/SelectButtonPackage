@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:select_button_package/widget/listview.dart';
 import '../const/box_decoration.dart';
 import '../const/padding.dart';
-import '../const/view-model/search_view_model.dart';
+import '../view-model/search_view_model.dart';
 import '../model/search_decoration.dart';
 import '../model/search_item.dart';
 import '../widget/search_bar.dart';
