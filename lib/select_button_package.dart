@@ -22,7 +22,7 @@ class SearchButton<T> extends StatefulWidget {
     this.onTapClearButton,
   });
 
-  final Text? title;
+  final Widget? title;
   final TextStyle? style;
   final String? initialValue;
   final TextAlign? textAlign;
