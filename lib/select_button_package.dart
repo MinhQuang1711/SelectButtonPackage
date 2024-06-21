@@ -1,4 +1,5 @@
 library select_button_package;
+
 /// A Calculator.
 import 'package:flutter/material.dart';
 
@@ -55,7 +56,7 @@ class _SearchButtonState<T> extends State<SearchButton<T>> {
   void _showBottomSheet() => showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        builder: (_) => SearchBottomSheet<T>(
+        builder: (_) => CustomSelectButton<T>(
           title: widget.title,
           searchDecoration: widget.searchDecoration,
           onTap: _onTap,

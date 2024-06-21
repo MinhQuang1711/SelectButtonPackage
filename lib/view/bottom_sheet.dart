@@ -7,8 +7,8 @@ import '../model/search_decoration.dart';
 import '../model/search_item.dart';
 import '../widget/search_bar.dart';
 
-class SearchBottomSheet<T> extends StatefulWidget {
-  const SearchBottomSheet({
+class CustomSelectButton<T> extends StatefulWidget {
+  const CustomSelectButton({
     super.key,
     this.title,
     this.emptyWidget,
@@ -23,10 +23,10 @@ class SearchBottomSheet<T> extends StatefulWidget {
   final SearchDecoration? searchDecoration;
 
   @override
-  State<SearchBottomSheet<T>> createState() => _SearchBottomSheetState<T>();
+  State<CustomSelectButton<T>> createState() => _CustomSelectButtonState<T>();
 }
 
-class _SearchBottomSheetState<T> extends State<SearchBottomSheet<T>> {
+class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
   final _viewModel = SearchViewModel<T>();
   @override
   void initState() {
