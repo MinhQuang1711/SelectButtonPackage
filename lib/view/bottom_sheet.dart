@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:select_button_package/widget/default_child.dart';
+import 'package:select_button_package/widget/listview.dart';
 import '../const/box_decoration.dart';
 import '../const/padding.dart';
 import '../const/view-model/search_view_model.dart';
@@ -11,11 +11,13 @@ class SearchBottomSheet<T> extends StatefulWidget {
   const SearchBottomSheet({
     super.key,
     this.title,
+    this.emptyWidget,
     required this.onTap,
     this.searchDecoration,
     required this.searchItems,
   });
   final Widget? title;
+  final Widget? emptyWidget;
   final Function(SearchItem<T>) onTap;
   final List<SearchItem<T>> searchItems;
   final SearchDecoration? searchDecoration;
@@ -53,14 +55,18 @@ class _SearchBottomSheetState<T> extends State<SearchBottomSheet<T>> {
       child: Column(
         children: [
           _container(),
-          const SizedBox(height: 25),
+          const SizedBox(height: 15),
           if (widget.title != null) widget.title!,
           SearchBarSelect(
             onChanged: _onChanged,
             searchDecoration: widget.searchDecoration,
-        ),
+          ),
           const SizedBox(height: 20),
-          _listView(_viewModel.listSearchItemStream, _onSelectedItem),
+          ListViewItem(
+            onTap: _onSelectedItem,
+            emptyWidget: widget.emptyWidget,
+            stream: _viewModel.listSearchItemStream,
+          ),
         ],
       ),
     );
@@ -72,25 +78,6 @@ class _SearchBottomSheetState<T> extends State<SearchBottomSheet<T>> {
       width: 50,
       decoration: BoxDecoration(
           color: Colors.grey, borderRadius: BorderRadius.circular(2)),
-    );
-  }
-
-  Widget _listView(
-      Stream<List<SearchItem<T>>> stream, Function(SearchItem<T>) onTap) {
-    return Expanded(
-      child: StreamBuilder(
-          stream: stream,
-          builder: (context, snapshot) {
-            var items = snapshot.data ?? [];
-            return ListView.builder(
-              itemBuilder: (context, index) => GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () => onTap.call(items[index]),
-                child: items[index].child ?? DefaultChild(item: items[index]),
-              ),
-              itemCount: items.length,
-            );
-          }),
     );
   }
 }
