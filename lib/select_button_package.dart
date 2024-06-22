@@ -12,6 +12,7 @@ class CustomSelectButton<T> extends StatefulWidget {
     super.key,
     this.title,
     this.style,
+    this.hideSeletedItem,
     this.textAlign,
     this.decoration,
     this.initialValue,
@@ -26,6 +27,7 @@ class CustomSelectButton<T> extends StatefulWidget {
   final TextStyle? style;
   final String? initialValue;
   final TextAlign? textAlign;
+  final bool? hideSeletedItem;
   final InputDecoration? decoration;
   final Function(SearchItem<T>) onTap;
   final SearchDecoration? searchDecoration;
@@ -50,7 +52,9 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
 
   void _onTap(SearchItem<T> val) {
     widget.onTap.call(val);
-    _controller.text = val.displayLabel;
+    if (widget.hideSeletedItem != true) {
+      _controller.text = val.displayLabel;
+    }
   }
 
   void _showBottomSheet() => showModalBottomSheet(
