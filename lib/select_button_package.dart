@@ -12,6 +12,7 @@ class CustomSelectButton<T> extends StatefulWidget {
     super.key,
     this.title,
     this.style,
+    this.searchValue,
     this.hideSeletedItem,
     this.textAlign,
     this.decoration,
@@ -28,6 +29,7 @@ class CustomSelectButton<T> extends StatefulWidget {
   final TextStyle? style;
   final Widget? emptyWidget;
   final String? initialValue;
+  final String? searchValue;
   final TextAlign? textAlign;
   final bool? hideSeletedItem;
   final InputDecoration? decoration;
@@ -55,7 +57,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
   void _onTap(SearchItem<T> val) {
     widget.onTap.call(val);
     if (widget.hideSeletedItem != true) {
-      _controller.text = val.displayLabel;
+      _controller.text = val.searchValue ?? val.displayLabel;
     }
   }
 
