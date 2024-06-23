@@ -20,11 +20,13 @@ class CustomSelectButton<T> extends StatefulWidget {
     required this.searchItems,
     this.searchDecoration,
     this.validator,
+    this.emptyWidget,
     this.onTapClearButton,
   });
 
   final Widget? title;
   final TextStyle? style;
+  final Widget? emptyWidget;
   final String? initialValue;
   final TextAlign? textAlign;
   final bool? hideSeletedItem;
@@ -62,6 +64,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
         isScrollControlled: true,
         builder: (_) => SearchBottomSheet<T>(
           title: widget.title,
+          emptyWidget: widget.emptyWidget,
           searchDecoration: widget.searchDecoration,
           onTap: _onTap,
           searchItems: widget.searchItems,
