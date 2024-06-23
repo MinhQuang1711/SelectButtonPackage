@@ -16,7 +16,7 @@ class SearchViewModel<T> {
       _listSearchItemSubject.sink.add(searchItems);
     } else {
       var result = searchItems
-          .where((e) => (e.searchValue ?? e.displayLabel)
+          .where((e) => (e.searchValue ?? e.displayLabel ?? "")
               .toLowerCase()
               .contains(val.trim().toLowerCase()))
           .toList();

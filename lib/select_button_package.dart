@@ -57,7 +57,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
   void _onTap(SearchItem<T> val) {
     widget.onTap.call(val);
     if (widget.hideSeletedItem != true) {
-      _controller.text = val.searchValue ?? val.displayLabel;
+      _controller.text = val.displayLabel ?? val.searchValue ?? "";
     }
   }
 

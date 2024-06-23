@@ -8,7 +8,7 @@ class DefaultChild<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: Text(item.displayLabel),
+      child: Text(item.displayLabel ?? ""),
     );
   }
 }
