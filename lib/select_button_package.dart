@@ -20,6 +20,7 @@ class CustomSelectButton<T> extends StatefulWidget {
     required this.onTap,
     required this.searchItems,
     this.searchDecoration,
+    this.controller,
     this.validator,
     this.emptyWidget,
     this.onTapClearButton,
@@ -37,6 +38,7 @@ class CustomSelectButton<T> extends StatefulWidget {
   final SearchDecoration? searchDecoration;
   final List<SearchItem<T>> searchItems;
   final Function()? onTapClearButton;
+  final TextEditingController? controller;
   final String? Function(String?)? validator;
 
   @override
@@ -44,10 +46,11 @@ class CustomSelectButton<T> extends StatefulWidget {
 }
 
 class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller;
 
   @override
   void initState() {
+    _controller = widget.controller ?? TextEditingController();
     if (widget.initialValue != null) {
       _controller.text = widget.initialValue!;
     }
