@@ -22,12 +22,14 @@ class CustomSelectButton<T> extends StatefulWidget {
     this.searchDecoration,
     this.controller,
     this.validator,
+    this.readOnly,
     this.emptyWidget,
     this.onTapClearButton,
   });
 
   final Widget? title;
   final TextStyle? style;
+  final bool? readOnly;
   final Widget? emptyWidget;
   final String? initialValue;
   final String? searchValue;
@@ -64,7 +66,9 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     }
   }
 
-  void _showBottomSheet() => showModalBottomSheet(
+  void _showBottomSheet() {
+    if (widget.readOnly != true) {
+      showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (_) => SearchBottomSheet<T>(
@@ -75,6 +79,8 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
           searchItems: widget.searchItems,
         ),
       );
+    }
+  }
 
   @override
   void dispose() {
