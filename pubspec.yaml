@@ -1,8 +1,8 @@
 name: select_button_package
-description: "A new Flutter package project."
+description: "A widget for select an item. It will open bottomshet an you can select item"
 version: 0.0.1
-homepage:
-
+homepage: https://github.com/MinhQuang1711/SelectButtonPackage.git
+documentation: https://github.com/MinhQuang1711/SelectButtonPackage.git
 environment:
   sdk: '>=3.4.3 <4.0.0'
   flutter: ">=1.17.0"
