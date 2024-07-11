@@ -99,7 +99,6 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
       controller: _controller,
       decoration: widget.decoration,
       validator: widget.validator,
-      initialValue: widget.initialValue,
       textAlign: widget.textAlign ?? TextAlign.start,
     );
   }
