@@ -71,9 +71,12 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
 
   @override
   void didUpdateWidget(covariant CustomSelectButton<T> oldWidget) {
-    if (oldWidget.initialValue != widget.initialValue) {
-      _controller.text = widget.initialValue ?? '';
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (oldWidget.initialValue != widget.initialValue) {
+        _controller.text = widget.initialValue ?? '';
+      }
+    });
+
     super.didUpdateWidget(oldWidget);
   }
 
