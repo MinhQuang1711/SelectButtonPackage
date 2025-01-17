@@ -59,6 +59,14 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(covariant CustomSelectButton<T> oldWidget) {
+    if (oldWidget.initialValue != widget.initialValue) {
+      _controller.text = widget.initialValue ?? '';
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   void _onTap(SearchItem<T> val) {
     widget.onTap.call(val);
     if (widget.hideSeletedItem != true) {
