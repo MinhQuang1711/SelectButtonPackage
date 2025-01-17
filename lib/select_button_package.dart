@@ -48,23 +48,18 @@ class CustomSelectButton<T> extends StatefulWidget {
 }
 
 class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
-  late final TextEditingController _controller;
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
-    _controller = widget.controller ?? TextEditingController();
+    if (widget.controller != null) {
+      _controller = widget.controller!;
+    }
+
     if (widget.initialValue != null) {
       _controller.text = widget.initialValue!;
     }
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant CustomSelectButton<T> oldWidget) {
-    if (oldWidget.initialValue != widget.initialValue) {
-      _controller.text = widget.initialValue ?? '';
-    }
-    super.didUpdateWidget(oldWidget);
   }
 
   void _onTap(SearchItem<T> val) {
@@ -92,9 +87,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
 
   @override
   void dispose() {
-    if (widget.controller == null) {
-      _controller.dispose();
-    }
+    _controller.dispose();
     super.dispose();
   }
 
