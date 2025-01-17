@@ -69,6 +69,14 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     }
   }
 
+  @override
+  void didUpdateWidget(covariant CustomSelectButton<T> oldWidget) {
+    if (oldWidget.initialValue != widget.initialValue) {
+      _controller.text = widget.initialValue ?? '';
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   void _showBottomSheet() {
     if (widget.readOnly != true) {
       showModalBottomSheet(
