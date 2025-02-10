@@ -126,23 +126,23 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          StreamBuilder(
-            stream: isHasValueStream,
-            builder: (context, hasValue) =>
-                ((hasValue.data == false || hasValue.data == null) &&
-                        widget.canClear != true)
-                    ? const SizedBox()
-                    : GestureDetector(
-                        onTap: () {
-                          _controller.clear();
-                          widget.onTapClearButton?.call();
-                        },
-                        child: const Icon(
-                          Icons.close,
-                          size: 12,
+          if (widget.canClear == true)
+            StreamBuilder(
+              stream: isHasValueStream,
+              builder: (context, hasValue) =>
+                  ((hasValue.data == false || hasValue.data == null))
+                      ? const SizedBox()
+                      : GestureDetector(
+                          onTap: () {
+                            _controller.clear();
+                            widget.onTapClearButton?.call();
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            size: 12,
+                          ),
                         ),
-                      ),
-          ),
+            ),
           if (widget.decoration?.suffixIcon != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
