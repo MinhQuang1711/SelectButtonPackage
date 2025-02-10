@@ -85,8 +85,8 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (oldWidget.initialValue != widget.initialValue) {
         _controller.text = widget.initialValue ?? '';
-        _hasValueController.sink.add(widget.initialValue?.isNotEmpty ?? false);
       }
+      _hasValueController.sink.add(widget.initialValue?.isNotEmpty ?? false);
     });
 
     super.didUpdateWidget(oldWidget);
