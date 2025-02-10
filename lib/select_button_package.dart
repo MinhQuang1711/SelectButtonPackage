@@ -129,7 +129,8 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
           StreamBuilder(
             stream: isHasValueStream,
             builder: (context, hasValue) =>
-                (hasValue.data == false || hasValue.data == null)
+                ((hasValue.data == false || hasValue.data == null) &&
+                        widget.canClear != true)
                     ? const SizedBox()
                     : GestureDetector(
                         onTap: () {
