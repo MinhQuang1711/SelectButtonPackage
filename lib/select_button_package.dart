@@ -66,9 +66,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
       _controller.text = widget.initialValue!;
     }
     _controller.addListener(() {
-      _controller.text.isNotEmpty
-          ? _hasValueController.add(true)
-          : _hasValueController.add(false);
+      _hasValueController.sink.add(_controller.text.isNotEmpty ? true : false);
     });
     super.initState();
   }
@@ -85,6 +83,9 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (oldWidget.initialValue != widget.initialValue) {
         _controller.text = widget.initialValue ?? '';
+        if (widget.initialValue?.isNotEmpty == true) {
+          _hasValueController.sink.add(true);
+        }
       }
     });
 
