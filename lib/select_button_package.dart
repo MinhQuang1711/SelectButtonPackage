@@ -1,5 +1,7 @@
 library select_button_package;
 
+import 'dart:async';
+
 /// A Calculator.
 import 'package:flutter/material.dart';
 
@@ -25,11 +27,13 @@ class CustomSelectButton<T> extends StatefulWidget {
     this.readOnly,
     this.emptyWidget,
     this.onTapClearButton,
+    this.canClear,
   });
 
   final Widget? title;
   final TextStyle? style;
   final bool? readOnly;
+  final bool? canClear;
   final Widget? emptyWidget;
   final String? initialValue;
   final String? searchValue;
@@ -49,6 +53,8 @@ class CustomSelectButton<T> extends StatefulWidget {
 
 class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
   TextEditingController _controller = TextEditingController();
+  final _hasValueController = StreamController<bool>.broadcast();
+  Stream<bool> get isHasValueStream => _hasValueController.stream;
 
   @override
   void initState() {
@@ -59,6 +65,11 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     if (widget.initialValue != null) {
       _controller.text = widget.initialValue!;
     }
+    _controller.addListener(() {
+      _controller.text.isNotEmpty
+          ? _hasValueController.add(true)
+          : _hasValueController.add(false);
+    });
     super.initState();
   }
 
@@ -99,6 +110,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
   @override
   void dispose() {
     _controller.dispose();
+    _hasValueController.close();
     super.dispose();
   }
 
@@ -109,7 +121,32 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
       readOnly: true,
       style: widget.style,
       controller: _controller,
-      decoration: widget.decoration,
+      decoration: widget.decoration?.copyWith(
+          suffixIcon: Row(
+        children: [
+          StreamBuilder(
+            stream: isHasValueStream,
+            builder: (context, hasValue) =>
+                (hasValue.data == false || hasValue.data == null)
+                    ? const SizedBox()
+                    : GestureDetector(
+                        onTap: () {
+                          _controller.clear();
+                          widget.onTapClearButton?.call();
+                        },
+                        child: const Icon(
+                          Icons.close,
+                          size: 12,
+                        ),
+                      ),
+          ),
+          if (widget.decoration?.suffixIcon != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: widget.decoration!.suffixIcon!,
+            )
+        ],
+      )),
       validator: widget.validator,
       textAlign: widget.textAlign ?? TextAlign.start,
     );
