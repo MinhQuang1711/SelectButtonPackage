@@ -133,6 +133,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
                       : GestureDetector(
                           onTap: () {
                             _controller.clear();
+                            _hasValueController.sink.add(false);
                             widget.onTapClearButton?.call();
                           },
                           child: const Icon(
