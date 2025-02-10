@@ -123,6 +123,8 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
       controller: _controller,
       decoration: widget.decoration?.copyWith(
           suffixIcon: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           StreamBuilder(
             stream: isHasValueStream,
