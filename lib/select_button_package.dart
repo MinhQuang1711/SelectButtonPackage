@@ -65,11 +65,6 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     if (widget.initialValue != null) {
       _controller.text = widget.initialValue!;
     }
-    _controller.addListener(() {
-      if (widget.initialValue != null) {
-        _hasValueController.sink.add(true);
-      }
-    });
     super.initState();
   }
 
@@ -77,6 +72,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
     widget.onTap.call(val);
     if (widget.hideSeletedItem != true) {
       _controller.text = val.displayLabel ?? val.searchValue ?? "";
+      _hasValueController.sink.add(_controller.text.isNotEmpty);
     }
   }
 
@@ -130,6 +126,7 @@ class _CustomSelectButtonState<T> extends State<CustomSelectButton<T>> {
           if (widget.canClear == true)
             StreamBuilder(
               stream: isHasValueStream,
+              initialData: widget.initialValue?.isNotEmpty ?? false,
               builder: (context, hasValue) =>
                   ((hasValue.data == false || hasValue.data == null))
                       ? const SizedBox()
